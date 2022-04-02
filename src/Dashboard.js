@@ -19,7 +19,9 @@ function Dashboard() {
     const [survey, setSurvey] = useState(false);
 
     const navigate = useNavigate();
-    
+    function handleClick() {
+        navigate('/class')
+    }
     // const updateRole = async () =>{
     //     try {
     //         const q = query(collection(db, "users"), where("uid", "==", user?.uid));
@@ -57,9 +59,6 @@ function Dashboard() {
         fetchUserName();
     }, [user, loading]);
 
-    const handleChange = e=>{
-
-    }
     return (
         <div className="dashboard">
         
@@ -75,7 +74,7 @@ function Dashboard() {
                     </button>
                 </div>
                 <div className="right">
-                    
+                    <Button onClick={handleClick}>Sign up for classes</Button>
                 </div>
         
          
@@ -83,7 +82,7 @@ function Dashboard() {
             <Modal show = {survey} onHide={()=> setSurvey(false)}>
                 <Modal.Body>
                         <Form.Group>
-                            {/* forms, name and zipcode to check if user's zipcode matches with the chef's */}
+                            
                             <Form.Label>Your role </Form.Label>
                             <Form.Control onChange={(event) => {account.role = event.target.value}}/>
                             
@@ -91,7 +90,7 @@ function Dashboard() {
                         </Form.Group>
                         <Button onClick={()=>setAccount(prevState => ({
                             ...prevState,
-                            "role":account.role
+                            "role":account.role //keep the old values
                         }))}>save</Button>
                         
                 </Modal.Body>

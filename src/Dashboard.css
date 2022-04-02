@@ -1,16 +1,35 @@
+
 .dashboard {
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+  
   .dashboard__container {
     display: flex;
-    flex-direction: column;
-    text-align: center;
+    height:90%;
+    width: 90%;
+    flex-direction: row;
+    flex-flow: wrap;
     background-color: #dcdcdc;
     padding: 30px;
+    
+  }
+  .left{
+    flex:.1;
+    padding:4px;
+    border-width:1px;
+    border-style:solid;
+    border-color:black;
+    margin-right: 10px;
+  }
+  .right{
+    flex:1;
+    border-width:1px;
+    border-style:solid;
+    border-color:black;
   }
   .dashboard__btn {
     padding: 10px;

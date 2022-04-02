@@ -8,6 +8,9 @@ import {
 } from "./firebase";
 import "./Register.css";
 
+
+
+
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,8 +21,13 @@ function Register() {
   const register = () => {
     if (!name) alert("Please enter name");
     registerWithEmailAndPassword(name, email, password);
+
   };
 
+  //todo , put in profile information such as name, 
+  const inputCollection = () =>{
+    
+  }
   useEffect(() => {
     if (loading) return;
     if (user) navigate("/dashboard");

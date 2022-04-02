@@ -15,6 +15,7 @@ import {
   collection,
   where,
   addDoc,
+  
 } from "firebase/firestore";
 const firebaseConfig = {
     apiKey: "AIzaSyCfLjxB15oUuRzHG1nJhq-M1WOwlTjiv1Y",
@@ -40,6 +41,9 @@ const signInWithGoogle = async () => {
         name: user.displayName,
         authProvider: "google",
         email: user.email,
+        role: "",
+        level:0,
+
       });
     }
   } catch (err) {
@@ -64,6 +68,8 @@ const registerWithEmailAndPassword = async (name, email, password) => {
       name,
       authProvider: "local",
       email,
+      role:"",
+      leve:0,
     });
   } catch (err) {
     console.error(err);

@@ -24,10 +24,6 @@ function Register() {
 
   };
 
-  //todo , put in profile information such as name, 
-  const inputCollection = () =>{
-    
-  }
   useEffect(() => {
     if (loading) return;
     if (user) navigate("/dashboard");

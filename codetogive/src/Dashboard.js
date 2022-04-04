@@ -3,7 +3,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 import { auth, db, logout } from "./firebase";
-import { doc, query, collection, getDocs, where } from "firebase/firestore";
+import { query, collection, getDocs, where } from "firebase/firestore";
 import { Modal, Button , Form} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from "axios";
@@ -79,6 +79,7 @@ function Dashboard() {
                 "experience":account.experience%100
             }))
             setConfetti(true);
+            alert("congrats you leveled up");
         }
     }
     let type = null;

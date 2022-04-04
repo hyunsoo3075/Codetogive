@@ -47,7 +47,10 @@ const Classes = ({classInfo, updateNewClass, updateClass, deleteSingleClass, rol
         }
         );
         updateNewClass(true);
-        classSignUp(true);
+        if(role!== "Mod"){
+            classSignUp(true);
+        }
+        
         
         
     }

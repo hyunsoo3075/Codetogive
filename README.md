@@ -1,4 +1,16 @@
 # Morgan-Stanley-Codetogive
+requirements:
+github
+nodejs
+golang
+
+libraries:
+gin
+react
+axios
+
+
+instructions:
 
 pull github repo,
 

@@ -11,6 +11,7 @@
     text-align: center;
     background-color: #dcdcdc;
     padding: 30px;
+    border-radius: 8px;
   }
   .reset__textBox {
     padding: 10px;
@@ -24,6 +25,7 @@
     border: none;
     color: white;
     background-color: black;
+    border-radius: 8px;
   }
   .reset div {
     margin-top: 7px;

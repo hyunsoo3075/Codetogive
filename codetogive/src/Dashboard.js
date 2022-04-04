@@ -8,24 +8,28 @@ import { Modal, Button , Form} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from "axios";
 import Classes from './singleClass';
+
+import Confetti from 'react-confetti'
 function Dashboard() {
     const [listClass, setListClass] = useState([]);
     const [refreshData, setRefreshData] = useState(false);
     const [addNewClass, setAddNewClass] = useState(false);
-    const [newClass, setNewClass] = useState({"name":"", "type": "", "description":""}) 
-    const [showAddNewClass, setShowAddNewClass] = useState(false)
-    
+    const [newClass, setNewClass] = useState({"name":"", "type": "", "description":"", "points":"", "dates":""});
+    const [signUp, setSignup] = useState(false);
     const [user, loading, error] = useAuthState(auth);
     const [account, setAccount] = useState({
         "name":"",
         "role":"",
         "level":0,
+        "experience": 0,
         "tags":{}
     })
-    const [classes, setClasses] = useState(false);
+    const [classSignUp, setClassSignUp] = useState(false);
     const [name, setName] = useState("");
     const [survey, setSurvey] = useState(false);
     const [selected, setSelected] = useState("");
+    const [points, setPoints] = useState(0);
+    const [confetti, setConfetti] = useState(false);
     const navigate = useNavigate();
     
     const challenges = [
@@ -56,8 +60,27 @@ function Dashboard() {
 
     const changeSelectOptionHandler = (event) => {
         setSelected(event.target.value);
-        account.role = event.target.value;
+        
+        
     };
+
+    
+    const handleClick = () =>{
+        setClassSignUp(false);
+        
+        let curr = parseInt(account.experience) + parseInt(points);
+        account.experience = curr;
+
+        
+        if(account.experience >= 100){
+            setAccount(prev =>({
+                ...prev,
+                "level": parseInt(prev.level) + 1,
+                "experience":account.experience%100
+            }))
+            setConfetti(true);
+        }
+    }
     let type = null;
 
     let options = null;
@@ -71,19 +94,6 @@ function Dashboard() {
         options = type.map((el)=><option key = {el}>{el}</option>);
     }
 
-    
-
-    // const updateRole = async () =>{
-    //     try {
-    //         const q = query(collection(db, "users"), where("uid", "==", user?.uid));
-            
-    //         await setDoc(collection(db,"users"),{role:account.role});
-            
-    //     } catch (err) {
-    //         console.error(err);
-    //         alert("An error occured while updating user data");
-    //     }
-    // }
     
     const fetchUserName = async () => {
         try {
@@ -113,6 +123,7 @@ function Dashboard() {
     useEffect(() => {
         if (loading) return;
         if (!user) return navigate("/");
+
         fetchUserName();
         getAllClasses();
         
@@ -120,27 +131,36 @@ function Dashboard() {
     
     return (
         <div className="dashboard">
-        
+            
             <div className="dashboard__container">
+                
                 <div className="left">
                     Logged in as
                     <div>{name}</div>
                     <div>{user?.email}</div>
                     <div>current Level: {account.level}</div>
-                    <div>Role: {account.role == ""?<Button onClick={()=>setSurvey(true)}>Change Role</Button>:account.role}</div>
+                    <div>Current level progress: {account.experience} / 100</div>
+                    <div>Role: {selected === ""?<Button onClick={()=>setSurvey(true)}>Change Role</Button>:selected}</div>
                     <button className="dashboard__btn" onClick={logout}>
                     Logout
                     </button>
                 </div>
                 <div className="right">
-                    {/* <Button onClick={handleClick}>Sign up for classes</Button> */}
-                    {listClass != null && listClass.map((singleClass, i) => (
-                        <Classes key={singleClass._id}  classInfo ={singleClass} updateNewClass = {setAddNewClass} updateClass = {setNewClass} deleteSingleClass = {deleteSingleClass}/>
-                    ))}
+                    <h1>
+                        {selected === "Mod"?<Button onClick={() => setSignup(true)}>add event</Button>:<></>}
+                    </h1>
+                    
+                    <div className="grid">
+                        {listClass != null && listClass.map((singleClass, i) => (
+                            <Classes key={singleClass._id}  classInfo ={singleClass} updateNewClass = {setAddNewClass} 
+                            updateClass = {setNewClass} deleteSingleClass = {deleteSingleClass} role = {selected} changeCurrentPts = {setPoints} classSignUp = {setClassSignUp}/>
+                        ))}
+                    </div>
                 </div>
         
          
             </div>
+            
             <Modal show = {survey} onHide={()=> setSurvey(false)}>
                 <Modal.Body>
                         <Form.Group>
@@ -159,11 +179,59 @@ function Dashboard() {
                             
                             
                         </Form.Group>
-                        <h1></h1>
+                        
                         <Button onClick={() => setSurvey(false)}>save</Button>
                         
                 </Modal.Body>
             </Modal>
+            <Modal show = {signUp && selected === "Mod"} onHide = {() => setSignup(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title> Add Event </Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+                    <Form.Group>
+                    
+                        <Form.Label>name </Form.Label>
+                        <Form.Control onChange={(event) => {newClass.name = event.target.value}}/>
+                        <Form.Label>description </Form.Label>
+                        <Form.Control onChange={(event) => {newClass.description = event.target.value}}/>
+                        <Form.Label>dates</Form.Label>
+                        <Form.Control onChange={(event) => {newClass.dates = event.target.value}}/>
+                        <Form.Label>points</Form.Label>
+                        <Form.Control onChange={(event) => {newClass.points = event.target.value}}/>
+                        <Form.Label>type</Form.Label>
+                        <Form.Control onChange={(event) => {newClass.type = event.target.value}}/>
+                        
+                        
+                        
+                        
+                            
+                            
+                            
+                            
+                    </Form.Group>
+                    <Button onClick={() => addClassItem()}>Add</Button>
+                    <Button onClick={() => setSignup(false)}>Cancel</Button>
+                </Modal.Body>
+            </Modal>
+            <Modal show = {classSignUp} onHide={()=> setClassSignUp(false)}>
+                <Modal.Body>
+                        <Form.Group>
+                            
+                            
+                            
+                        </Form.Group>
+                        <h1></h1>
+                        <Button onClick={() => handleClick()}>sign up</Button>
+                        
+                </Modal.Body>
+            </Modal>
+            <Confetti 
+                run = {confetti}
+                width={window.innerWidth}
+                height={window.innerHeight}
+            />
         </div>
     );
 
@@ -187,6 +255,27 @@ function Dashboard() {
                 setRefreshData(true)
             }
         })
+    }
+    function addClassItem(){
+        setSignup(false)
+        var url = "http://localhost:4000/class/create";
+        if(newClass.points === "" || newClass.name === ""||newClass.type === "" || newClass.dates === "" || newClass.description === ""){
+            alert("All of the fields must be filled")
+        }
+        else{
+            axios.post(url,{
+                "name": newClass.name, 
+                "description":newClass.description, 
+                "date":newClass.dates, 
+                "points": newClass.points,
+                "type": newClass.type
+            }).then(response => {
+                if(response.status === 200){
+                    setRefreshData(true)
+                }
+            })
+        }
+        
     }
 }
 

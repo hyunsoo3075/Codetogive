@@ -1,16 +1,16 @@
 import 'bootstrap/dist/css/bootstrap.css';
-
+import { useEffect, useState } from "react";
 import {Button, Card, ListGroupItem, ListGroup } from 'react-bootstrap'
 
 import React from 'react'
+import "./singleClass.css"
 
-
-const Classes = ({classInfo, updateNewClass, updateClass, deleteSingleClass}) => {
+const Classes = ({classInfo, updateNewClass, updateClass, deleteSingleClass, role, changeCurrentPts, classSignUp}) => {
     
     return (
         <div className='container'>
-            
 
+                
                 <Card style={{ width: '18rem'}} onClick={() => updateCurrentClass()} >
                     
                     <Card.Body>
@@ -20,11 +20,14 @@ const Classes = ({classInfo, updateNewClass, updateClass, deleteSingleClass}) =>
                         </Card.Text>
                     </Card.Body>
                         <ListGroup className="list-group-flush">
-                            <ListGroupItem>Time: {classInfo !== undefined && classInfo.time}</ListGroupItem>
+                            <ListGroupItem>Dates: {classInfo !== undefined && classInfo.date}</ListGroupItem>
                             <ListGroupItem>Points: { classInfo !== undefined && classInfo.points}</ListGroupItem>
 
                         </ListGroup>
-                        <Button onClick={() => deleteSingleClass(classInfo._id)}>delete item</Button>
+                        <>
+                            {role === "Mod"?<Button onClick={() => deleteSingleClass(classInfo._id)}>delete event</Button>:<></>}
+                        </>
+                        
                 </Card>
             
             
@@ -34,7 +37,8 @@ const Classes = ({classInfo, updateNewClass, updateClass, deleteSingleClass}) =>
         
     )
     function updateCurrentClass(){
-        
+        changeCurrentPts(classInfo.points);
+
         
         updateClass({
             "name": classInfo.name,  
@@ -43,6 +47,7 @@ const Classes = ({classInfo, updateNewClass, updateClass, deleteSingleClass}) =>
         }
         );
         updateNewClass(true);
+        classSignUp(true);
         
         
     }

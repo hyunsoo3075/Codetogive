@@ -17,18 +17,29 @@
     
   }
   .left{
-    flex:.1;
+    flex:.3;
     padding:4px;
     border-width:1px;
     border-style:solid;
     border-color:black;
     margin-right: 10px;
+    align-items: center;
+    justify-content: center;
   }
   .right{
     flex:1;
+    
+    
+    justify-content: center;
     border-width:1px;
     border-style:solid;
     border-color:black;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns: auto auto auto auto;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
   }
   .dashboard__btn {
     padding: 10px;

@@ -10,7 +10,8 @@
     flex-direction: column;
     text-align: center;
     background-color: #dcdcdc;
-    padding: 30px;
+    padding: 80px;
+    border-radius: 8px;
   }
   .login__textBox {
     padding: 10px;
@@ -24,6 +25,7 @@
     border: none;
     color: white;
     background-color: black;
+    border-radius: 8px;
   }
   .login__google {
     background-color: #4285f4;

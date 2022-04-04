@@ -20,9 +20,9 @@ const Classes = ({classInfo, updateNewClass, updateClass, deleteSingleClass}) =>
                         </Card.Text>
                     </Card.Body>
                         <ListGroup className="list-group-flush">
-                            <ListGroupItem>location: {classInfo !== undefined && classInfo.zipcode}</ListGroupItem>
-                            <ListGroupItem>Chef: { classInfo !== undefined && classInfo.chef}</ListGroupItem>
-                            <ListGroupItem>{ classInfo !== undefined && classInfo.price}</ListGroupItem>
+                            <ListGroupItem>Time: {classInfo !== undefined && classInfo.time}</ListGroupItem>
+                            <ListGroupItem>Points: { classInfo !== undefined && classInfo.points}</ListGroupItem>
+
                         </ListGroup>
                         <Button onClick={() => deleteSingleClass(classInfo._id)}>delete item</Button>
                 </Card>

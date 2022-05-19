@@ -8,6 +8,8 @@ import (
 type Class struct {
 	ID          primitive.ObjectID `bson:"_id"`
 	Name        *string            `json:"name" binding:"required"`
-	Type        *string            `json:"type" binding:"required"`
 	Description *string            `json:"description" binding:"required"`
+	Date        *string            `json:"date" binding:"required"`
+	Type        *string            `json:"type" binding:"required"`
+	Points      *string            `json:"points" binding:"required"`
 }

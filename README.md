@@ -1,4 +1,4 @@
-# Morgan-Stanley-Codetogive
+# Codetogive
 requirements:
 github
 nodejs
